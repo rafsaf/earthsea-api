@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+import api.models as models
+
+
+admin.site.register(models.Article) 
+admin.site.register(models.Version) 
