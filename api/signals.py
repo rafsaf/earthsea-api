@@ -10,7 +10,7 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         initial_version = models.Version(
             article=instance,
-            text="Ten artykuł nie posiada jeszcze zweryfikowanej zawartości.",
+            text="Ten artykuł nie posiada jeszcze zweryfikowanej zawartości, jest to domyślny tekst każdego nowego artykułu. Kliknij „Edytuj” by samemu zmienić jego zawartość, bądź też zmień wersję na jeszcze niezweryfikowaną.",
             confirm=True,
         )
         initial_version.save()

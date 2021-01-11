@@ -15,19 +15,21 @@ class Article(models.Model):
     confirmed = models.BooleanField(default=False)
     main_page = models.BooleanField(default=False)
     title = models.CharField(max_length=24)
-    slug = models.CharField(max_length=100)
+    slug = models.CharField(max_length=100, unique=True)
     category = models.CharField(max_length=15, choices=AVAILABLE_CATEGORIES)
     description = models.CharField(max_length=160)
-    author = models.CharField(max_length=24),
+    author = models.CharField(max_length=24)
     created_time = models.DateTimeField(auto_now=True)
     created = models.DateField(auto_now=True)
     image = models.ImageField(blank=True)
     source = models.CharField(max_length=160, default="", blank=True)
     like = models.IntegerField(default=0)
-    unlike = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['-created_time']
+
+    def __str__(self):
+        return self.title
 
 class Version(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)

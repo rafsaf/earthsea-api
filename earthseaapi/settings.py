@@ -12,15 +12,16 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
+from django.conf import settings
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Import sensitive data from secrets.json from BASE_DIR
 import json
-import os
 from django.core.exceptions import ImproperlyConfigured
 
-with open(os.path.join(BASE_DIR, 'secrets.json')) as secrets_file:
+with open(BASE_DIR / 'secrets.json') as secrets_file:
     secrets = json.load(secrets_file)
 
 def get_secret(setting, secrets=secrets):
@@ -28,7 +29,7 @@ def get_secret(setting, secrets=secrets):
     try:
         return secrets[setting]
     except KeyError:
-        raise ImproperlyConfigured("Set the {} setting".format(setting))
+        raise ImproperlyConfigured(f"Set the {setting} setting in \"secrets.json\" file in BASE_DIR.")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     # 3rd part
     'rest_framework',
+    'corsheaders',
     # from django
     'django.contrib.admin',
     'django.contrib.auth',
@@ -61,11 +63,16 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
 ]
 
 ROOT_URLCONF = 'earthseaapi.urls'
@@ -137,3 +144,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "static"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
