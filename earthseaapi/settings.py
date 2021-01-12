@@ -38,9 +38,9 @@ def get_secret(setting, secrets=secrets):
 SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = get_secret("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [get_secret("ALLOWED_HOST")]
 
 
 # Application definition
@@ -72,7 +72,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    get_secret("ALLOWED_ORIGIN"),
 ]
 
 ROOT_URLCONF = 'earthseaapi.urls'
