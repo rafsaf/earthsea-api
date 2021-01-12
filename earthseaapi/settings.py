@@ -72,7 +72,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    get_secret("ALLOWED_ORIGIN"),
+    get_secret("ALLOWED_ORIGIN_ONE"),
+    get_secret("ALLOWED_ORIGIN_TWO"),
 ]
 
 ROOT_URLCONF = 'earthseaapi.urls'
